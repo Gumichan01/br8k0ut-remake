@@ -1,14 +1,10 @@
-# br8k0ut #
+# br8k0ut HD #
 
 8-bit Platform game for Windows
 
 ## About ##
-
-Br8k0ut is a platformer video game I made in the context of the [UOGBJAM](https://itch.io/jam/unofficial-gbjam1).
-
-This game jam was a good opportunity to make something different from what
-I have done before and to learn new things, such as tile mapping,
-and some others things specific to a platformer video game.
+Br8k0ut UD is a remake of [Br8k0ut](https://github.com/Gumichan01/br8k0ut).
+I made this game in the context of the [#RemakeJam 2](https://itch.io/jam/remakejam-2)
 
 This game was developed in C++ and uses [LunatiX](https://github.com/Gumichan01/lunatix) and
 [TMXParser](https://github.com/Gumichan01/TMXParser)/[TSXParser](https://github.com/Gumichan01/TSXParser)
