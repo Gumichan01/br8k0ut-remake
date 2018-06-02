@@ -40,8 +40,8 @@ namespace
 {
 const std::string MAP_PATH("./data/map/");
 
-const int SPRITE_W = 8;
-const int SPRITE_H = 8;
+const int SPRITE_W = 64;
+const int SPRITE_H = 40;
 
 void loadLevel(unsigned int lvl, TMX::Parser& tmx)
 {
@@ -176,7 +176,7 @@ Area::Area(unsigned int lvl): level_id(lvl), vtypes(), gtiles(), map_texture(nul
         for(TSX::Parser::Tile& tile: tsx.tileList)
         {
             LX_Log::log("Tile: %d - %s", tile.id, (MAP_PATH + tile.img.name).c_str());
-            bimages.push_back(new LX_BufferedImage(MAP_PATH + tile.img.name, LX_PIXELFORMAT_RGB888));
+            bimages.push_back(new LX_BufferedImage(MAP_PATH + tile.img.name, LX_PIXELFORMAT_RGBA8888));
             Type *t = new Type();
             *t = {tile.id + 1, tile.type};
             vtypes.push_back(t);

@@ -55,8 +55,8 @@ struct Type
 
 class Player;
 
-const int TILE_W = 8;
-const int TILE_H = 8;
+const int TILE_W = 64;
+const int TILE_H = 40;
 
 class Area
 {
