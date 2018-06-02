@@ -126,6 +126,11 @@ bool Game::input()
                 win.toggleFullscreen(full ? LX_Win::LX_WINDOW_NO_FULLSCREEN : LX_Win::LX_WINDOW_FULLSCREEN);
                 full = !full;
             }
+            else if(ev.getKeyCode() == SDLK_ESCAPE)
+            {
+                _done = true;
+                exit_status = true;
+            }
             else
                 player->input(ev);
             break;
