@@ -43,14 +43,14 @@ const FloatPosition DFPOS = {0.0f, 0.0f};
 const std::string PLAYER_PATH("./data/image/player.png");
 const std::string JUMP_PATH("./data/audio/jump.wav");
 
-const float MAX_SPEED = 2.0f;
-const float STEP_UP   = 0.25f;
-const float STEP_DOWN = 0.5f;
+const float MAX_SPEED = 13.0f;
+const float STEP_UP   = 1.708f;
+const float STEP_DOWN = 0.854f;
 
-const float GRAVITY   = 1.48f;
-const float DASH = 28.0f;
-const int DASH_STEP = 8;
-const float DASH_M = 8.0f;
+const float GRAVITY = 6.42f;
+const float DASH    = 192.0f;
+const int DASH_STEP = 64;
+const float DASH_M  = 64.0f;
 
 bool slow = true;
 
