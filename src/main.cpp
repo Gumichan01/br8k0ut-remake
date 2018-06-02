@@ -31,9 +31,9 @@ using namespace LX_Event;
 namespace
 {
 
-const int GAME_WIDTH = 160;
-const int GAME_HEIGHT = 144;
-const std::string GAME_TITLE("Br8k0ut");
+const int GAME_WIDTH  = Game::GAME_WIDTH;
+const int GAME_HEIGHT = Game::GAME_HEIGHT;
+const std::string GAME_TITLE("Br8k0ut HD");
 const std::string GAME_ICON("data/image/icon.ico");
 
 }
