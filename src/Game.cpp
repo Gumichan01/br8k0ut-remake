@@ -48,11 +48,6 @@ using namespace LX_Event;
 Game::Game(LX_Win::LX_Window& w) : done(false), lvl_count(0),
     exit_status(false), player(nullptr), win(w), music(nullptr)
 {
-    for(unsigned int i = 1; i <= NB_LEVELS; ++i)
-    {
-        areas.push_back(new Area(i));
-    }
-
     LX_Mixer::setOverallVolume(VOLUME);
     music = new LX_Mixer::LX_Music(MUSIC_PATH);
     bullet_sp = new LX_Graphics::LX_Sprite(BULLET_PATH, win);
@@ -64,9 +59,13 @@ void Game::play()
     music->play(-1);
     while(lvl_count < NB_LEVELS && !exit_status)
     {
-        player = new Player(areas[lvl_count]->getStart(), *areas[lvl_count]);
+        area = new Area(lvl_count + 1);
+        player = new Player(area->getStart(), *area);
         loop();
+
+        delete area;
         delete player;
+        area = nullptr;
         player = nullptr;
         lvl_count++;
     }
@@ -78,7 +77,7 @@ void Game::play()
 void Game::loadShooters()
 {
     std::vector<LX_AABB> boxes;
-    areas[lvl_count]->getCanons(boxes);
+    area->getCanons(boxes);
 
     for(const LX_AABB& b : boxes)
     {
@@ -195,7 +194,7 @@ void Game::clean()
 void Game::display()
 {
     win.clearWindow();
-    areas[lvl_count]->draw();
+    area->draw();
     for(Bullet *bullet: bullets) bullet->draw();
     player->draw();
     win.update();
@@ -209,12 +208,7 @@ void Game::acceptBullet(LX_AABB& bullet_rect)
 
 Game::~Game()
 {
-    for(size_t i = 0; i < areas.size(); ++i)
-    {
-        delete areas[i];
-    }
-
-    areas.clear();
+    delete area;
     delete player;
     delete music;
     delete bullet_sp;
