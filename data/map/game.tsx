@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="breakout" tilewidth="8" tileheight="8" tilecount="37" columns="0">
+<tileset name="breakout" tilewidth="64" tileheight="40" tilecount="44" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
-  <image width="8" height="8" source="../image/fond.png"/>
+  <image width="64" height="40" source="../image/bg.png"/>
  </tile>
  <tile id="1" type="solid">
-  <image width="8" height="8" source="../image/wall.png"/>
+  <image width="64" height="40" source="../image/wall.png"/>
  </tile>
  <tile id="2" type="solid">
   <image width="8" height="8" source="../image/gate.png"/>
@@ -14,13 +14,13 @@
   <image width="8" height="8" source="../image/canon.png"/>
  </tile>
  <tile id="4" type="death">
-  <image width="8" height="8" source="../image/trap.png"/>
+  <image width="64" height="40" source="../image/trap.png"/>
  </tile>
  <tile id="5" type="start">
-  <image width="8" height="8" source="../image/start.png"/>
+  <image width="64" height="40" source="../image/start.png"/>
  </tile>
  <tile id="6" type="exit">
-  <image width="8" height="8" source="../image/door.png"/>
+  <image width="64" height="40" source="../image/exit.png"/>
  </tile>
  <tile id="7">
   <image width="8" height="8" source="../image/letter_a.png"/>
@@ -71,7 +71,7 @@
   <image width="8" height="8" source="../image/digit_8.png"/>
  </tile>
  <tile id="23">
-  <image width="8" height="8" source="../image/trap_rev.png"/>
+  <image width="64" height="40" source="../image/trap_rev.png"/>
  </tile>
  <tile id="24" type="solid">
   <image width="8" height="8" source="../image/wallc1.png"/>
@@ -111,5 +111,26 @@
  </tile>
  <tile id="36">
   <image width="8" height="8" source="../image/final_trans7.png"/>
+ </tile>
+ <tile id="37" type="solid">
+  <image width="64" height="40" source="../image/floorl.png"/>
+ </tile>
+ <tile id="38" type="solid">
+  <image width="64" height="40" source="../image/floorr.png"/>
+ </tile>
+ <tile id="39" type="solid">
+  <image width="64" height="40" source="../image/floor.png"/>
+ </tile>
+ <tile id="40">
+  <image width="64" height="40" source="../image/grass.png"/>
+ </tile>
+ <tile id="41">
+  <image width="64" height="40" source="../image/bottom.png"/>
+ </tile>
+ <tile id="42" type="solid">
+  <image width="64" height="40" source="../image/cliffl.png"/>
+ </tile>
+ <tile id="43" type="solid">
+  <image width="64" height="40" source="../image/cliffr.png"/>
  </tile>
 </tileset>
