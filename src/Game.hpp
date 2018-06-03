@@ -53,7 +53,6 @@ class Game
     unsigned int lvl_count;
     bool exit_status;
     Player * player;
-    //std::vector<Area*> areas;
     Area* area;
     std::vector<Shooter*> shooters;
     std::vector<Bullet*> bullets;
