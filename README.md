@@ -3,7 +3,7 @@
 8-bit Platform game for Windows
 
 ## About ##
-Br8k0ut UD is a remake of [Br8k0ut](https://github.com/Gumichan01/br8k0ut).
+Br8k0ut HD is a remake of [Br8k0ut](https://github.com/Gumichan01/br8k0ut).
 I made this game in the context of the [#RemakeJam 2](https://itch.io/jam/remakejam-2)
 
 This game was developed in C++ and uses [LunatiX](https://github.com/Gumichan01/lunatix) and
@@ -18,6 +18,7 @@ No Jump, just move and dash. That's all you need to know.
 - Left and Right Arrow: move
 - Left Shift: dash
 - F: Fullscreen
+- P: Screenshot
 - ESCAPE: Quit the game
 
 
