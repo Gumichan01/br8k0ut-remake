@@ -34,16 +34,65 @@
 #include <LunatiX/LX_Mixer.hpp>
 #include <LunatiX/LX_Music.hpp>
 #include <LunatiX/LX_Log.hpp>
+#include <sstream>
 
 namespace
 {
 const std::string MUSIC_PATH("data/audio/gumichan01-eastern_wind.ogg");
 const std::string BULLET_PATH("data/image/bullet.png");
-const std::string FONT_FILE("font/Prototype.tff");
+const std::string FONT_FILE("font/Prototype.ttf");
 const LX_Colour BLACK_COLOUR = {0,0,0,0};
 const unsigned int TEXT_SIZE = 32U;
 const unsigned short VOLUME = 75;
 LX_Graphics::LX_Sprite *bullet_sp = nullptr;
+
+inline const char * sec_(int second)
+{
+    return second < 10 ? "0":"";
+}
+
+inline const char * minute_(int minute)
+{
+    return minute < 10 ? "0":"";
+}
+
+const std::string toString(unsigned int t)
+{
+    std::ostringstream ss;
+    const unsigned int H_MINUTE = 60U;
+    const unsigned int M_SECOND = 60U;
+    const unsigned int D = t / 1000U;
+    const unsigned int MI = t - D * 1000U;
+    unsigned int hour, minute, second;
+
+    hour   = 0U;
+    minute = 0U;
+    second = 0U;
+
+    if(D > M_SECOND)
+    {
+        minute = D / M_SECOND;
+        second = D % M_SECOND;
+
+        if(minute > H_MINUTE)
+        {
+            hour = minute / H_MINUTE;
+            minute = minute % H_MINUTE;
+        }
+    }
+    else
+        second = D;
+
+    if(hour > 0)
+        ss << hour << ":" << minute_(minute) << minute << ":" << sec_(second) << second;
+    else if(minute > 0)
+        ss << minute << ":" << sec_(second) << second;
+    else
+        ss << second << "." << MI;
+
+    return ss.str();
+}
+
 }
 
 using namespace LX_Event;
@@ -101,6 +150,14 @@ void Game::loop()
     done = false;
     loadShooters();
     timer.resume();
+
+    if(lvl_count == NB_LEVELS - 1)
+    {
+        std::ostringstream os;
+        os << "Time: " << toString(total_time);
+        time_texture->setText(os.str());
+        time_texture->setPosition(900,32);
+    }
 
     while(!done)
     {
@@ -219,6 +276,10 @@ void Game::display()
         bullet->draw();
 
     player->draw();
+
+    if(lvl_count == NB_LEVELS - 1)
+        time_texture->draw();
+
     win.update();
 }
 
