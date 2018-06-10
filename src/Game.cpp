@@ -39,6 +39,9 @@ namespace
 {
 const std::string MUSIC_PATH("data/audio/gumichan01-eastern_wind.ogg");
 const std::string BULLET_PATH("data/image/bullet.png");
+const std::string FONT_FILE("font/Prototype.tff");
+const LX_Colour BLACK_COLOUR = {0,0,0,0};
+const unsigned int TEXT_SIZE = 32U;
 const unsigned short VOLUME = 75;
 LX_Graphics::LX_Sprite *bullet_sp = nullptr;
 }
@@ -47,11 +50,14 @@ using namespace LX_Event;
 
 
 Game::Game(LX_Win::LX_Window& w) : done(false), lvl_count(0),
-    exit_status(false), player(nullptr), win(w), music(nullptr)
+    exit_status(false), player(nullptr), win(w), music(nullptr), ev(),
+    total_time(0U), font(FONT_FILE, BLACK_COLOUR, TEXT_SIZE),
+    time_texture(nullptr), timer()
 {
     LX_Mixer::setOverallVolume(VOLUME);
     music = new LX_Mixer::LX_Music(MUSIC_PATH);
     bullet_sp = new LX_Graphics::LX_Sprite(BULLET_PATH, win);
+    time_texture = new LX_Graphics::LX_BlendedTextTexture(font, win);
 }
 
 
@@ -224,6 +230,7 @@ void Game::acceptBullet(LX_AABB& bullet_rect)
 
 Game::~Game()
 {
+    delete time_texture;
     delete area;
     delete player;
     delete music;

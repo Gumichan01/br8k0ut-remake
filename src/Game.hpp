@@ -28,6 +28,8 @@
 
 #include <LunatiX/LX_Event.hpp>
 #include <LunatiX/LX_AABB.hpp>
+#include <LunatiX/LX_Texture.hpp>
+#include <LunatiX/LX_TrueTypeFont.hpp>
 
 #include <vector>
 
@@ -63,7 +65,10 @@ class Game
     LX_Mixer::LX_Music *music;
     LX_Event::LX_EventHandler ev;
     unsigned int total_time;
+    LX_TrueTypeFont::LX_Font font;
+    LX_Graphics::LX_TextTexture *time_texture;
     Timer timer;
+
 
     void loadShooters();
 
