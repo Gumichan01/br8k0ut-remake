@@ -42,7 +42,7 @@ const std::string MUSIC_PATH("data/audio/gumichan01-eastern_wind.ogg");
 const std::string BULLET_PATH("data/image/bullet.png");
 const std::string FONT_FILE("font/Prototype.ttf");
 const LX_Colour BLACK_COLOUR = {0,0,0,0};
-const unsigned int TEXT_SIZE = 32U;
+const unsigned int TEXT_SIZE = 64U;
 const unsigned short VOLUME = 75;
 LX_Graphics::LX_Sprite *bullet_sp = nullptr;
 
@@ -154,9 +154,9 @@ void Game::loop()
     if(lvl_count == NB_LEVELS - 1)
     {
         std::ostringstream os;
-        os << "Time: " << toString(total_time);
+        os << "Done in " << toString(total_time);
         time_texture->setText(os.str());
-        time_texture->setPosition(900,32);
+        time_texture->setPosition(512, 32);
     }
 
     while(!done)
@@ -171,7 +171,6 @@ void Game::loop()
         Framerate::cycle();
     }
 
-    LX_Log::logDebug(LX_Log::LX_LOG_APPLICATION, "TIME: %u\n", timer.getTicks());
     timer.pause();
 
     if(lvl_count == NB_LEVELS - 2)
