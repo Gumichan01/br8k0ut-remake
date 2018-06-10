@@ -33,6 +33,7 @@
 #include <LunatiX/LX_Timer.hpp>
 #include <LunatiX/LX_Mixer.hpp>
 #include <LunatiX/LX_Music.hpp>
+#include <LunatiX/LX_Log.hpp>
 
 namespace
 {
@@ -57,6 +58,8 @@ Game::Game(LX_Win::LX_Window& w) : done(false), lvl_count(0),
 void Game::play()
 {
     music->play(-1);
+    timer.start();
+    timer.pause();
     while(lvl_count < NB_LEVELS && !exit_status)
     {
         area = new Area(lvl_count + 1);
@@ -69,6 +72,8 @@ void Game::play()
         player = nullptr;
         lvl_count++;
     }
+
+    timer.stop();
     music->stop();
     music->close();
 }
@@ -89,6 +94,7 @@ void Game::loop()
 {
     done = false;
     loadShooters();
+    timer.resume();
 
     while(!done)
     {
@@ -101,6 +107,9 @@ void Game::loop()
         Framerate::regulate();
         Framerate::cycle();
     }
+
+    LX_Log::logDebug(LX_Log::LX_LOG_APPLICATION, "TIME: %u\n", timer.getTicks());
+    timer.pause();
     clean();
 }
 
@@ -195,7 +204,10 @@ void Game::display()
 {
     win.clearWindow();
     area->draw();
-    for(Bullet *bullet: bullets) bullet->draw();
+
+    for(Bullet *bullet: bullets)
+        bullet->draw();
+
     player->draw();
     win.update();
 }

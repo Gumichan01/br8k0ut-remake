@@ -24,6 +24,8 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
 
+#include "Timer.hpp"
+
 #include <LunatiX/LX_Event.hpp>
 #include <LunatiX/LX_AABB.hpp>
 
@@ -60,6 +62,7 @@ class Game
     LX_Win::LX_Window& win;
     LX_Mixer::LX_Music *music;
     LX_Event::LX_EventHandler ev;
+    Timer timer;
 
     void loadShooters();
 
