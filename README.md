@@ -1,6 +1,6 @@
 # br8k0ut HD #
 
-8-bit Platform game for Windows
+Platform game for Windows
 
 ## About ##
 Br8k0ut HD is a remake of [Br8k0ut](https://github.com/Gumichan01/br8k0ut).
