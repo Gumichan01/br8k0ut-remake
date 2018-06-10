@@ -110,6 +110,10 @@ void Game::loop()
 
     LX_Log::logDebug(LX_Log::LX_LOG_APPLICATION, "TIME: %u\n", timer.getTicks());
     timer.pause();
+
+    if(lvl_count == NB_LEVELS - 2)
+        total_time = timer.getTicks();
+
     clean();
 }
 

@@ -62,6 +62,7 @@ class Game
     LX_Win::LX_Window& win;
     LX_Mixer::LX_Music *music;
     LX_Event::LX_EventHandler ev;
+    unsigned int total_time;
     Timer timer;
 
     void loadShooters();
