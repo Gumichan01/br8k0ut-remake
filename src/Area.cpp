@@ -152,37 +152,38 @@ Area::Area(unsigned int lvl): level_id(lvl), vtypes(), gtiles(), map_texture(nul
 {
     TMX::Parser tmx;
 
-    LX_Log::log("TMX");
+    //LX_Log::log("TMX");
     loadLevel(lvl, tmx);
 
-    LX_Log::log("Map Version: %s", tmx.mapInfo.version.c_str());
-    LX_Log::log("Tileset [ Source: %s ]", tmx.tilesetList[0].source.c_str());
+    //LX_Log::log("Map Version: %s", tmx.mapInfo.version.c_str());
+    //LX_Log::log("Tileset [ Source: %s ]", tmx.tilesetList[0].source.c_str());
 
     const auto it = tmx.tileLayer.begin();
     LX_Log::log("Tile Layer Data contents:");
-
+    /*
     if(LX_Log::isDebugMode())
         std::cout << tmx.tileLayer[it->first].data.contents << std::endl;
+    */
 
-    LX_Log::log("END TMX\n");
+    //LX_Log::log("END TMX\n");
 
     {
-        LX_Log::log("TSX");
-        LX_Log::log("TSX: open %s", (MAP_PATH + tmx.tilesetList[0].source).c_str());
+        //LX_Log::log("TSX");
+        //LX_Log::log("TSX: open %s", (MAP_PATH + tmx.tilesetList[0].source).c_str());
         TSX::Parser tsx;
         tsx.load(std::string(MAP_PATH + tmx.tilesetList[0].source).c_str());
-        LX_Log::log("Name: %s", tsx.tileset.name.c_str());
+        //LX_Log::log("Name: %s", tsx.tileset.name.c_str());
 
         for(TSX::Parser::Tile& tile: tsx.tileList)
         {
-            LX_Log::log("Tile: %d - %s", tile.id, (MAP_PATH + tile.img.name).c_str());
+            //LX_Log::log("Tile: %d - %s", tile.id, (MAP_PATH + tile.img.name).c_str());
             bimages.push_back(new LX_BufferedImage(MAP_PATH + tile.img.name, LX_PIXELFORMAT_RGBA8888));
             Type *t = new Type();
             *t = {tile.id + 1, tile.type};
             vtypes.push_back(t);
         }
 
-        LX_Log::log("END TSX\n");
+        //LX_Log::log("END TSX\n");
     }
 
     /// Convert the map
