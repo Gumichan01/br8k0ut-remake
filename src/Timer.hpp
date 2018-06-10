@@ -26,9 +26,9 @@
 
 class Timer final
 {
-    unsigned int m_start = 0UL;
-    unsigned int m_pause = 0UL;
-    unsigned int m_tradeoff = 0UL;
+    unsigned int m_start = 0U;
+    unsigned int m_pause = 0U;
+    unsigned int m_tradeoff = 0U;
     bool m_stopped = true;
     bool m_paused  = false;
 
