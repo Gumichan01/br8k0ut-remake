@@ -38,7 +38,7 @@ class Shooter
 
 public:
 
-    Shooter(Game& g,const LX_AABB& rect);
+    Shooter( Game& g, const LX_AABB& rect );
     void strategy();
     void fire();
     ~Shooter();

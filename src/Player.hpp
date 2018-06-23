@@ -57,43 +57,43 @@ struct FloatPosition
     float y;
 
     FloatPosition();
-    FloatPosition(float fx, float fy);
-    FloatPosition(const FloatPosition& fp);
-    explicit FloatPosition(const LX_AABB& b);
-    FloatPosition& operator =(const FloatPosition& fp);
-    FloatPosition& operator =(const LX_AABB& aabb);
-    FloatPosition& operator +=(const LX_Physics::LX_Vector2D& v);
+    FloatPosition( float fx, float fy );
+    FloatPosition( const FloatPosition& fp );
+    explicit FloatPosition( const LX_AABB& b );
+    FloatPosition& operator =( const FloatPosition& fp );
+    FloatPosition& operator =( const LX_AABB& aabb );
+    FloatPosition& operator +=( const LX_Physics::LX_Vector2D& v );
 
-    void toPixelUnit(LX_AABB& aabb);
+    void toPixelUnit( LX_AABB& aabb );
 };
 
 
 class Player
 {
-    LX_Graphics::LX_Sprite *sprite;
-    LX_Mixer::LX_Chunk *sound;
+    LX_Graphics::LX_Sprite * sprite;
+    LX_Mixer::LX_Chunk * sound;
     FloatPosition fpos;
     LX_AABB position;
     LX_Physics::LX_Vector2D speed;
     const Area& area;
     bool dash;
 
-    void handleCollision(int imax, int jmax, const GTile& tile);
+    void handleCollision( int imax, int jmax, const GTile& tile );
     void adaptDash();
     bool outOfBound();
-    bool bulletCollision(const std::vector<Bullet*>& bullets);
+    bool bulletCollision( const std::vector<Bullet *>& bullets );
     void restart();
 
 public:
 
-    Player(const LX_AABB& pos, const Area& a);
+    Player( const LX_AABB& pos, const Area& a );
 
     void draw();
-    void input(const LX_Event::LX_EventHandler& ev);
+    void input( const LX_Event::LX_EventHandler& ev );
     void inputState();
 
     void move();
-    bool status(const std::vector<Bullet*>& bullets);
+    bool status( const std::vector<Bullet *>& bullets );
 
     ~Player();
 };

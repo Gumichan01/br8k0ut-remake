@@ -7,7 +7,7 @@
 namespace TSX
 {
 
-Parser::Parser( const char* filename )
+Parser::Parser( const char * filename )
 {
     load( filename );
 }
@@ -21,9 +21,9 @@ Parser::~Parser()
     //dtor
 }
 
-bool Parser::load( const char* filename )
+bool Parser::load( const char * filename )
 {
-    rapidxml::xml_node<>* root_node;
+    rapidxml::xml_node<> * root_node;
     rapidxml::xml_document<> doc;
     rapidxml::file<> file( filename );
     doc.parse<0>( file.data() );
@@ -36,16 +36,16 @@ bool Parser::load( const char* filename )
     tileset.spacing = root_node->first_attribute( "spacing" ) == nullptr ? 0 : std::atoi( root_node->first_attribute( "spacing" )->value() );
     tileset.margin = root_node->first_attribute( "margin" ) == nullptr ? 0 : std::atoi( root_node->first_attribute( "margin" )->value() );
 
-    if( root_node->first_node( "tileoffset" ) != 0 )
+    if ( root_node->first_node( "tileoffset" ) != 0 )
     {
         tileset.offsetX = std::atoi( root_node->first_node( "tileoffset" )->first_attribute( "x" )->value() );
         tileset.offsetY = std::atoi( root_node->first_node( "tileoffset" )->first_attribute( "y" )->value() );
     }
 
     //parse tileset properties
-    if( root_node->first_node( "properties" ) != 0 )
+    if ( root_node->first_node( "properties" ) != 0 )
     {
-        for( rapidxml::xml_node<>* properties_node = root_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+        for ( rapidxml::xml_node<> * properties_node = root_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
         {
             tileset.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
         }
@@ -59,24 +59,24 @@ bool Parser::load( const char* filename )
     tileset.image.height = root_node->first_node( "image" ) == nullptr ?
                            0 : std::atoi( root_node->first_node( "image" )->first_attribute( "height" )->value() );
 
-    if( root_node->first_node( "image" ) != nullptr && root_node->first_node( "image" )->first_attribute( "trans" ) != nullptr )
+    if ( root_node->first_node( "image" ) != nullptr && root_node->first_node( "image" )->first_attribute( "trans" ) != nullptr )
     {
         tileset.image.transparentColor = std::atoi( root_node->first_node( "image" )->first_attribute( "trans" )->value() );
     }
 
     //parse tileset terrains
-    if( root_node->first_node( "terraintypes" ) != 0 )
+    if ( root_node->first_node( "terraintypes" ) != 0 )
     {
-        for( rapidxml::xml_node<>* terrain_node = root_node->first_node( "terraintypes" )->first_node( "terrain" ); terrain_node; terrain_node = terrain_node->next_sibling() )
+        for ( rapidxml::xml_node<> * terrain_node = root_node->first_node( "terraintypes" )->first_node( "terrain" ); terrain_node; terrain_node = terrain_node->next_sibling() )
         {
             Terrain terrain;
             terrain.name = terrain_node->first_attribute( "name" )->value();
             terrain.tile = std::atoi( terrain_node->first_attribute( "tile" )->value() );
 
             //parse tileset terrain properties
-            if( terrain_node->first_node( "properties" ) != 0 )
+            if ( terrain_node->first_node( "properties" ) != 0 )
             {
-                for( rapidxml::xml_node<>* properties_node = terrain_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+                for ( rapidxml::xml_node<> * properties_node = terrain_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
                 {
                     terrain.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
                 }
@@ -87,9 +87,9 @@ bool Parser::load( const char* filename )
     }
 
     //pare tile
-    if( root_node->first_node( "tile" ) != 0 )
+    if ( root_node->first_node( "tile" ) != 0 )
     {
-        for( rapidxml::xml_node<>* tile_node = root_node->first_node( "tile" ); tile_node; tile_node = tile_node->next_sibling() )
+        for ( rapidxml::xml_node<> * tile_node = root_node->first_node( "tile" ); tile_node; tile_node = tile_node->next_sibling() )
         {
             Tile tile;
             //tile - id
@@ -100,45 +100,45 @@ bool Parser::load( const char* filename )
             std::stringstream ss( tmp );
             std::string tmpValue;
 
-            while( std::getline( ss, tmpValue, ',' ) )
+            while ( std::getline( ss, tmpValue, ',' ) )
             {
                 tile.terrain.push_back( std::atoi( tmpValue.c_str() ) );
             }
 
 
-            if(tile_node->first_attribute( "type" ) != nullptr)
+            if ( tile_node->first_attribute( "type" ) != nullptr )
                 tile.type = tile_node->first_attribute( "type" )->value();
             else
                 tile.type = "none";
 
             //parse tile properties
-            if( tile_node->first_node( "properties" ) != 0 )
+            if ( tile_node->first_node( "properties" ) != 0 )
             {
-                for( rapidxml::xml_node<>* properties_node = tile_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+                for ( rapidxml::xml_node<> * properties_node = tile_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
                 {
                     tile.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
                 }
             }
 
-            if( tile_node->first_node( "image" ) != nullptr )
+            if ( tile_node->first_node( "image" ) != nullptr )
             {
-                for( rapidxml::xml_node<>* img_node = tile_node->first_node( "image" ); img_node != nullptr; img_node = img_node->next_sibling() )
+                for ( rapidxml::xml_node<> * img_node = tile_node->first_node( "image" ); img_node != nullptr; img_node = img_node->next_sibling() )
                 {
-                    if( img_node->first_attribute("width") == nullptr )
+                    if ( img_node->first_attribute( "width" ) == nullptr )
                         tile.img.witdh = tileset.tileWidth;
                     else
-                        tile.img.witdh = std::atoi( img_node->first_attribute("width")->value() );
+                        tile.img.witdh = std::atoi( img_node->first_attribute( "width" )->value() );
 
-                    if( img_node->first_attribute("height") == nullptr )
+                    if ( img_node->first_attribute( "height" ) == nullptr )
                         tile.img.height = tileset.tileHeight;
                     else
-                        tile.img.height = std::atoi( img_node->first_attribute("height")->value() );
+                        tile.img.height = std::atoi( img_node->first_attribute( "height" )->value() );
 
                     /**
                     *   @note If the program crashes here, that means the TSX file is malformed
                     *   See http://doc.mapeditor.org/en/latest/reference/tmx-map-format/#image
                     */
-                    tile.img.name = img_node->first_attribute("source")->value();
+                    tile.img.name = img_node->first_attribute( "source" )->value();
                 }
             }
 

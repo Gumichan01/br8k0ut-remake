@@ -33,18 +33,18 @@ namespace
 
 const int GAME_WIDTH  = Game::GAME_WIDTH;
 const int GAME_HEIGHT = Game::GAME_HEIGHT;
-const std::string GAME_TITLE("Br8k0ut HD");
-const std::string GAME_ICON("data/image/icon.ico");
+const std::string GAME_TITLE( "Br8k0ut HD" );
+const std::string GAME_ICON( "data/image/icon.ico" );
 
 }
 
-int main(int argc, char** argv)
+int main( int argc, char ** argv )
 {
     LX_EventHandler ev;
 
-    if(!LX_Init())
+    if ( !LX_Init() )
     {
-        LX_Log::log("Cannot load the library: %s",LX_GetError());
+        LX_Log::log( "Cannot load the library: %s", LX_GetError() );
         return -1;
     }
 
@@ -52,18 +52,18 @@ int main(int argc, char** argv)
 
     // Information about how to build the window
     LX_Win::LX_WindowInfo info;
-    LX_Win::LX_loadWindowConfig(info);
+    LX_Win::LX_loadWindowConfig( info );
     info.title = GAME_TITLE;
     info.w = GAME_WIDTH;
     info.h = GAME_HEIGHT;
 
-    LX_Win::LX_Window w(info);
-    w.setIcon(GAME_ICON);
-    WinID::setWinID(LX_Win::LX_WindowManager::getInstance()->addWindow(&w));
-    LX_Device::mouseCursorDisplay(LX_Device::LX_MOUSE_HIDE);
+    LX_Win::LX_Window w( info );
+    w.setIcon( GAME_ICON );
+    WinID::setWinID( LX_Win::LX_WindowManager::getInstance()->addWindow( &w ) );
+    LX_Device::mouseCursorDisplay( LX_Device::LX_MOUSE_HIDE );
 
     // play
-    Game(w).play();
+    Game( w ).play();
 
     LX_Win::LX_WindowManager::getInstance()->clearWindows();
     LX_Quit();

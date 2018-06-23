@@ -8,7 +8,7 @@
 namespace TMX
 {
 
-Parser::Parser( const char* filename )
+Parser::Parser( const char * filename )
 {
     load( filename );
 }
@@ -21,10 +21,10 @@ Parser::~Parser()
 {
 }
 
-bool Parser::load( const char* filename )
+bool Parser::load( const char * filename )
 {
     std::string version = VERSION;
-    rapidxml::xml_node<>* root_node;
+    rapidxml::xml_node<> * root_node;
     rapidxml::xml_document<> doc;
     rapidxml::file<> file( filename );
     doc.parse<0>( file.data() );
@@ -32,7 +32,7 @@ bool Parser::load( const char* filename )
     root_node = doc.first_node( "map" );
 
     //load map element
-    if( root_node->first_attribute( "version" )->value() != version )
+    if ( root_node->first_attribute( "version" )->value() != version )
     {
         std::cout << "ERROR: Map version mismatch. Required version: " << VERSION << "." << std::endl;
         return false;
@@ -51,15 +51,15 @@ bool Parser::load( const char* filename )
     mapInfo.tileHeight = std::atoi( root_node->first_attribute( "tileheight" )->value() );
     //std::cout << "Tile Height: " << mapInfo.tileHeight << std::endl;
 
-    if( root_node->first_attribute( "backgroundcolor" ) && root_node->first_attribute( "backgroundcolor" )->value() != 0 )
+    if ( root_node->first_attribute( "backgroundcolor" ) && root_node->first_attribute( "backgroundcolor" )->value() != 0 )
     {
         mapInfo.backgroundColor = root_node->first_attribute( "backgroundcolor" )->value();
         //std::cout << "Background Color: " << mapInfo.backgroundColor << std::endl;
     }
 
-    if( root_node->first_node( "properties" ) != 0 )
+    if ( root_node->first_node( "properties" ) != 0 )
     {
-        for( rapidxml::xml_node<>* properties_node = root_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+        for ( rapidxml::xml_node<> * properties_node = root_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
         {
             mapInfo.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
         }
@@ -74,7 +74,7 @@ bool Parser::load( const char* filename )
 
     std::cout << std::endl;
 
-    for( rapidxml::xml_node<>* tileset_node = root_node->first_node( "tileset" ); tileset_node; tileset_node = tileset_node->next_sibling( "tileset" ) )
+    for ( rapidxml::xml_node<> * tileset_node = root_node->first_node( "tileset" ); tileset_node; tileset_node = tileset_node->next_sibling( "tileset" ) )
     {
         Tileset tmpTileset;
         tmpTileset.firstGID = std::atoi( tileset_node->first_attribute( "firstgid" )->value() );
@@ -83,15 +83,15 @@ bool Parser::load( const char* filename )
         tilesetList.push_back( tmpTileset );
     }
 
-    for( rapidxml::xml_node<>* layer_node = root_node->first_node( "layer" ); layer_node; layer_node = layer_node->next_sibling( "layer" ) )
+    for ( rapidxml::xml_node<> * layer_node = root_node->first_node( "layer" ); layer_node; layer_node = layer_node->next_sibling( "layer" ) )
     {
         TileLayer layer;
         layer.name = layer_node->first_attribute( "name" )->value();
         //std::cout << std::endl << "Layer Name: " << layer.name << std::endl;
 
-        if( layer_node->first_node( "properties" ) != 0 )
+        if ( layer_node->first_node( "properties" ) != 0 )
         {
-            for( rapidxml::xml_node<>* properties_node = layer_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+            for ( rapidxml::xml_node<> * properties_node = layer_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
             {
                 layer.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
             }
@@ -104,11 +104,11 @@ bool Parser::load( const char* filename )
             }*/
         }
 
-        rapidxml::xml_node<>* data_node = layer_node->first_node( "data" );
+        rapidxml::xml_node<> * data_node = layer_node->first_node( "data" );
         layer.data.encoding = data_node->first_attribute( "encoding" )->value();
         //std::cout << "Layer Encoding: " << layer.data.encoding << std::endl;
 
-        if( data_node->first_attribute( "compression" ) > 0 )
+        if ( data_node->first_attribute( "compression" ) > 0 )
         {
             layer.data.compression = data_node->first_attribute( "compression" )->value();
             //std::cout << "Layer Compression: " << layer.data.compression << std::endl;
@@ -119,7 +119,7 @@ bool Parser::load( const char* filename )
         tileLayer[layer.name] = layer;
     }
 
-    for( rapidxml::xml_node<>* oGroup_node = root_node->first_node( "objectgroup" ); oGroup_node; oGroup_node = oGroup_node->next_sibling( "objectgroup" ) )
+    for ( rapidxml::xml_node<> * oGroup_node = root_node->first_node( "objectgroup" ); oGroup_node; oGroup_node = oGroup_node->next_sibling( "objectgroup" ) )
     {
         ObjectGroup oGroup;
         std::cout << std::endl;
@@ -132,9 +132,9 @@ bool Parser::load( const char* filename )
         oGroup.visible = std::atoi( oGroup_node->first_attribute( "visible" )->value() );
         //std::cout << "Object Group Visible: " << oGroup.visible << std::endl;
 
-        if( oGroup_node->first_node( "properties" ) != 0 )
+        if ( oGroup_node->first_node( "properties" ) != 0 )
         {
-            for( rapidxml::xml_node<>* properties_node = oGroup_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
+            for ( rapidxml::xml_node<> * properties_node = oGroup_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() )
             {
                 oGroup.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
             }
@@ -150,14 +150,14 @@ bool Parser::load( const char* filename )
         objectGroup[oGroup.name] = oGroup;
     }
 
-    for( rapidxml::xml_node<>* image_node = root_node->first_node( "imagelayer" ); image_node; image_node = image_node->next_sibling( "imagelayer" ) )
+    for ( rapidxml::xml_node<> * image_node = root_node->first_node( "imagelayer" ); image_node; image_node = image_node->next_sibling( "imagelayer" ) )
     {
         ImageLayer imgLayer;
         std::cout << std::endl;
         imgLayer.name = image_node->first_attribute( "name" )->value();
         //std::cout << "Image Layer Name: " << imgLayer.name << std::endl;
 
-        if( image_node->first_attribute( "opacity" ) != 0 )
+        if ( image_node->first_attribute( "opacity" ) != 0 )
         {
             imgLayer.opacity = std::atof( image_node->first_attribute( "opacity" )->value() );
             //std::cout << "Image Layer Opacity: " << imgLayer.opacity << std::endl;
@@ -169,15 +169,15 @@ bool Parser::load( const char* filename )
         imgLayer.image.source = image_node->first_node( "image" )->first_attribute( "source" )->value();
         //std::cout << "Image Layer Source: " << imgLayer.visible << std::endl;
 
-        if( image_node->first_node( "image" )->first_attribute( "trans" ) != 0 )
+        if ( image_node->first_node( "image" )->first_attribute( "trans" ) != 0 )
         {
             imgLayer.image.transparencyColor = image_node->first_node( "image" )->first_attribute( "trans" )->value();
             //std::cout << "Image Layer Transparent Color: " << imgLayer.image.transparencyColor << std::endl;
         }
 
-        if( image_node->first_node( "properties" ) != 0 )
+        if ( image_node->first_node( "properties" ) != 0 )
         {
-            for( rapidxml::xml_node<>* properties_node = image_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling( "property" ) )
+            for ( rapidxml::xml_node<> * properties_node = image_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling( "property" ) )
             {
                 imgLayer.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();
             }

@@ -29,11 +29,11 @@ namespace
 const uint32_t DELAY = 1500;
 }
 
-Shooter::Shooter(Game& g, const LX_AABB& rect) : game(g), pos_start(rect),
-    shot_strat(nullptr)
+Shooter::Shooter( Game& g, const LX_AABB& rect ) : game( g ), pos_start( rect ),
+    shot_strat( nullptr )
 {
-    shot_strat = new ShotStrategy(this);
-    shot_strat->setShotDelay(DELAY);
+    shot_strat = new ShotStrategy( this );
+    shot_strat->setShotDelay( DELAY );
 }
 
 
@@ -44,7 +44,7 @@ void Shooter::strategy()
 
 void Shooter::fire()
 {
-    game.acceptBullet(pos_start);
+    game.acceptBullet( pos_start );
 }
 
 Shooter::~Shooter()

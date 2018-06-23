@@ -25,6 +25,6 @@
 
 namespace WinID
 {
-void setWinID(uint32_t id);
+void setWinID( uint32_t id );
 uint32_t getWinID();
 }

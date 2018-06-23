@@ -62,11 +62,11 @@ class Area
 {
     friend class Player;
     unsigned int level_id;
-    std::vector<Type*> vtypes;
+    std::vector<Type *> vtypes;
     std::array<GTile, Game::GAME_HEIGHT * Game::GAME_WIDTH> gtiles;
-    LX_Graphics::LX_StreamingTexture *map_texture;
+    LX_Graphics::LX_StreamingTexture * map_texture;
 
-    void parseMap(const std::string& map_string);
+    void parseMap( const std::string& map_string );
     void generateMap();
 
 public:
@@ -78,11 +78,11 @@ public:
     static const std::string TYPE_SHOT;
     static const std::string TYPE_EXIT;
 
-    Area(unsigned int lvl);
+    Area( unsigned int lvl );
     void draw();
 
     const LX_AABB getStart() const;
-    void getCanons(std::vector<LX_AABB>& v);
+    void getCanons( std::vector<LX_AABB>& v );
 
     ~Area();
 };

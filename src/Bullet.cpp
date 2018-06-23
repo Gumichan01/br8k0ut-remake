@@ -33,11 +33,11 @@ using namespace LX_Physics;
 namespace
 {
 const int OFFSET = 2;
-const LX_Vector2D BULLET_V = LX_Vector2D(0.0f, 6.6934f);
+const LX_Vector2D BULLET_V = LX_Vector2D( 0.0f, 6.6934f );
 }
 
-Bullet::Bullet(LX_Graphics::LX_Sprite *image, LX_AABB& rect)
-    : graphic(image), position(rect), speed(BULLET_V), y(rect.y)
+Bullet::Bullet( LX_Graphics::LX_Sprite * image, LX_AABB& rect )
+    : graphic( image ), position( rect ), speed( BULLET_V ), y( rect.y )
 {
     position.x += 1;
     position.w -= 2;
@@ -47,9 +47,9 @@ Bullet::Bullet(LX_Graphics::LX_Sprite *image, LX_AABB& rect)
 
 void Bullet::draw()
 {
-    if(graphic != nullptr)
+    if ( graphic != nullptr )
     {
-        graphic->draw(&position);
+        graphic->draw( &position );
     }
 }
 
@@ -59,9 +59,9 @@ void Bullet::move()
     y += speed.vy;
     position.y = y;
 
-    if(position.y > Game::GAME_WIDTH)
+    if ( position.y > Game::GAME_WIDTH )
     {
-        if(graphic != nullptr)
+        if ( graphic != nullptr )
             graphic = nullptr;
     }
 }

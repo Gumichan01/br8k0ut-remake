@@ -49,7 +49,7 @@ class Bullet
 
 public:
 
-    Bullet(LX_Graphics::LX_Sprite *image, LX_AABB& rect);
+    Bullet( LX_Graphics::LX_Sprite * image, LX_AABB& rect );
 
     void draw();
     void move();

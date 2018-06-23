@@ -40,8 +40,8 @@
 namespace
 {
 const FloatPosition DFPOS = {0.0f, 0.0f};
-const std::string PLAYER_PATH("./data/image/player.png");
-const std::string JUMP_PATH("./data/audio/jump.wav");
+const std::string PLAYER_PATH( "./data/image/player.png" );
+const std::string JUMP_PATH( "./data/audio/jump.wav" );
 
 const float MAX_SPEED = 13.0f;
 const float STEP_UP   = 1.708f;
@@ -56,9 +56,9 @@ bool slow = true;
 
 void screenshot()
 {
-    LX_Win::LX_Window *win = LX_Win::LX_WindowManager::getInstance()->getWindow(1);
+    LX_Win::LX_Window * win = LX_Win::LX_WindowManager::getInstance()->getWindow( 1 );
 
-    if(win != nullptr && LX_Log::isDebugMode())
+    if ( win != nullptr && LX_Log::isDebugMode() )
     {
         static int id_screen = 1;
 
@@ -66,12 +66,12 @@ void screenshot()
         char datestr[SZ] = {'\0'};
         char name[SZ] = {'\0'};
 
-        time_t t = time(nullptr);
-        struct tm *tmp = localtime(&t);
+        time_t t = time( nullptr );
+        struct tm * tmp = localtime( &t );
 
-        strftime(datestr, SZ, "%Y-%m-%d_%H-%M-%S-tx", tmp);
-        sprintf(name, "%s-%d.png", datestr, id_screen++);
-        win->screenshot(name);
+        strftime( datestr, SZ, "%Y-%m-%d_%H-%M-%S-tx", tmp );
+        sprintf( name, "%s-%d.png", datestr, id_screen++ );
+        win->screenshot( name );
     }
 }
 }
@@ -81,19 +81,19 @@ using namespace LX_Physics;
 
 /// Floating-point coordinates
 
-FloatPosition::FloatPosition(): x(0.0f), y(0.0f) {}
-FloatPosition::FloatPosition(float fx, float fy): x(fx), y(fy) {}
-FloatPosition::FloatPosition(const FloatPosition& fp): x(fp.x), y(fp.y) {}
-FloatPosition::FloatPosition(const LX_AABB& b): FloatPosition(b.x, b.y) {}
+FloatPosition::FloatPosition(): x( 0.0f ), y( 0.0f ) {}
+FloatPosition::FloatPosition( float fx, float fy ): x( fx ), y( fy ) {}
+FloatPosition::FloatPosition( const FloatPosition& fp ): x( fp.x ), y( fp.y ) {}
+FloatPosition::FloatPosition( const LX_AABB& b ): FloatPosition( b.x, b.y ) {}
 
-FloatPosition& FloatPosition::operator =(const FloatPosition& fp)
+FloatPosition& FloatPosition::operator =( const FloatPosition& fp )
 {
     x = fp.x;
     y = fp.y;
     return *this;
 }
 
-FloatPosition& FloatPosition::operator =(const LX_AABB& aabb)
+FloatPosition& FloatPosition::operator =( const LX_AABB& aabb )
 {
     x = aabb.x;
     y = aabb.y;
@@ -101,28 +101,28 @@ FloatPosition& FloatPosition::operator =(const LX_AABB& aabb)
 }
 
 
-FloatPosition& FloatPosition::operator +=(const LX_Physics::LX_Vector2D& v)
+FloatPosition& FloatPosition::operator +=( const LX_Physics::LX_Vector2D& v )
 {
     x += v.vx;
     y += v.vy;
     return *this;
 }
 
-void FloatPosition::toPixelUnit(LX_AABB& aabb)
+void FloatPosition::toPixelUnit( LX_AABB& aabb )
 {
-    aabb.x = static_cast<int>(x);
-    aabb.y = static_cast<int>(y);
+    aabb.x = static_cast<int>( x );
+    aabb.y = static_cast<int>( y );
 }
 
 
 /// Player
 
-Player::Player(const LX_AABB& pos, const Area& a): sprite(nullptr),
-    sound(nullptr), fpos(DFPOS), position(pos), area(a), dash(false)
+Player::Player( const LX_AABB& pos, const Area& a ): sprite( nullptr ),
+    sound( nullptr ), fpos( DFPOS ), position( pos ), area( a ), dash( false )
 {
-    LX_Window *win = LX_WindowManager::getInstance()->getWindow(WinID::getWinID());
-    sprite = new LX_Graphics::LX_Sprite(PLAYER_PATH, *win);
-    sound = new LX_Mixer::LX_Chunk(JUMP_PATH);
+    LX_Window * win = LX_WindowManager::getInstance()->getWindow( WinID::getWinID() );
+    sprite = new LX_Graphics::LX_Sprite( PLAYER_PATH, *win );
+    sound = new LX_Mixer::LX_Chunk( JUMP_PATH );
     fpos = position;
     speed *= 0.0f;
     speed.vy = GRAVITY;
@@ -132,22 +132,22 @@ void Player::draw()
 {
     static short last = 0;
 
-    if(speed.vx > 0.0f)
+    if ( speed.vx > 0.0f )
     {
-        sprite->draw(&position);
+        sprite->draw( &position );
         last = 0;
     }
-    else if (speed.vx < 0.0f)
+    else if ( speed.vx < 0.0f )
     {
-        sprite->draw(&position, 0.0f, LX_Graphics::LX_MIRROR_HORIZONTAL);
+        sprite->draw( &position, 0.0f, LX_Graphics::LX_MIRROR_HORIZONTAL );
         last = LX_Graphics::LX_MIRROR_HORIZONTAL;
     }
     else
     {
-        if(last == 0)
-            sprite->draw(&position);
+        if ( last == 0 )
+            sprite->draw( &position );
         else
-            sprite->draw(&position, 0.0f, LX_Graphics::LX_MIRROR_HORIZONTAL);
+            sprite->draw( &position, 0.0f, LX_Graphics::LX_MIRROR_HORIZONTAL );
 
     }
 }
@@ -155,40 +155,40 @@ void Player::draw()
 
 void Player::inputState()
 {
-    const uint8_t *KEYS = LX_Event::LX_EventHandler::getKeyboardState().state;
+    const uint8_t * KEYS = LX_Event::LX_EventHandler::getKeyboardState().state;
 
-    if(KEYS[SDL_SCANCODE_LEFT])
+    if ( KEYS[SDL_SCANCODE_LEFT] )
     {
         slow = false;
 
-        if(speed.vx > -MAX_SPEED)
+        if ( speed.vx > -MAX_SPEED )
             speed.vx -= STEP_UP;
         else
             speed.vx = -MAX_SPEED;
     }
 
-    if(KEYS[SDL_SCANCODE_RIGHT])
+    if ( KEYS[SDL_SCANCODE_RIGHT] )
     {
         slow = false;
 
-        if(speed.vx < MAX_SPEED)
+        if ( speed.vx < MAX_SPEED )
             speed.vx += STEP_UP;
         else
             speed.vx = MAX_SPEED;
     }
 
-    if(slow)
+    if ( slow )
     {
-        if(speed.vx > 0.0f)
+        if ( speed.vx > 0.0f )
         {
-            if(speed.vx - STEP_DOWN < 0.0f)
+            if ( speed.vx - STEP_DOWN < 0.0f )
                 speed.vx = 0.0f;
             else
                 speed.vx -= STEP_DOWN;
         }
-        else if(speed.vx < 0.0f)
+        else if ( speed.vx < 0.0f )
         {
-            if(speed.vx + STEP_DOWN > 0.0f)
+            if ( speed.vx + STEP_DOWN > 0.0f )
                 speed.vx = 0.0f;
             else
                 speed.vx += STEP_DOWN;
@@ -197,19 +197,19 @@ void Player::inputState()
 }
 
 
-void Player::input(const LX_Event::LX_EventHandler& ev)
+void Player::input( const LX_Event::LX_EventHandler& ev )
 {
-    if(ev.getEventType() == LX_Event::LX_EventType::LX_KEYUP)
+    if ( ev.getEventType() == LX_Event::LX_EventType::LX_KEYUP )
     {
-        if(ev.getKeyCode() == SDLK_LEFT || ev.getKeyCode() == SDLK_RIGHT)
+        if ( ev.getKeyCode() == SDLK_LEFT || ev.getKeyCode() == SDLK_RIGHT )
             slow = true;
 
-        else if(ev.getKeyCode() == SDLK_LSHIFT)
+        else if ( ev.getKeyCode() == SDLK_LSHIFT )
         {
             dash = true;
             sound->play();
         }
-        else if(ev.getKeyCode() == SDLK_p)
+        else if ( ev.getKeyCode() == SDLK_p )
         {
             screenshot();
         }
@@ -223,16 +223,16 @@ void Player::adaptDash()
     bool oob = false;
     LX_AABB nposition;
 
-    for(int k = 1; k <= DASH / DASH_M; ++k)
+    for ( int k = 1; k <= DASH / DASH_M; ++k )
     {
         nposition = position;
 
-        if(speed.vx > 0.0f)
-            nposition.x += DASH_STEP*k;
+        if ( speed.vx > 0.0f )
+            nposition.x += DASH_STEP * k;
         else
-            nposition.x -= DASH_STEP*k;
+            nposition.x -= DASH_STEP * k;
 
-        if(nposition.x <= TILE_W || nposition.x >= Game::GAME_WIDTH - TILE_W)
+        if ( nposition.x <= TILE_W || nposition.x >= Game::GAME_WIDTH - TILE_W )
         {
             oob = true;
             break;
@@ -241,40 +241,40 @@ void Player::adaptDash()
         {
             int jmin = nposition.x / TILE_W;
             int imin = nposition.y / TILE_H;
-            int jmax = (nposition.x + nposition.w - 1) / TILE_W;
-            int imax = (nposition.y + nposition.h - 1) / TILE_H;
+            int jmax = ( nposition.x + nposition.w - 1 ) / TILE_W;
+            int imax = ( nposition.y + nposition.h - 1 ) / TILE_H;
 
-            for(int i = imin; i <= imax; ++i)
+            for ( int i = imin; i <= imax; ++i )
             {
-                for(int j = jmin; j <= jmax; ++j)
+                for ( int j = jmin; j <= jmax; ++j )
                 {
-                    const GTile& t = area.gtiles[i * Game::GAME_WIDTH +j];
+                    const GTile& t = area.gtiles[i * Game::GAME_WIDTH + j];
 
-                    if(collisionRect(nposition, t.rect) && t.type != Area::TYPE_NONE)
+                    if ( collisionRect( nposition, t.rect ) && t.type != Area::TYPE_NONE )
                     {
-                        if(speed.vx > 0.0f)
-                            fpos.x += static_cast<float>(std::abs(nposition.x - t.rect.x) + DASH_STEP*k);
+                        if ( speed.vx > 0.0f )
+                            fpos.x += static_cast<float>( std::abs( nposition.x - t.rect.x ) + DASH_STEP * k );
                         else
-                            fpos.x -= static_cast<float>(std::abs(nposition.x - t.rect.x + t.rect.w) + DASH_STEP*k);
+                            fpos.x -= static_cast<float>( std::abs( nposition.x - t.rect.x + t.rect.w ) + DASH_STEP * k );
 
-                        fpos.toPixelUnit(position);
+                        fpos.toPixelUnit( position );
                         found = true;
                         break;
                     }
                 }
 
-                if(found)
+                if ( found )
                     break;
             }
         }
     }
 
-    if(!oob)
+    if ( !oob )
     {
-        if(!found)
+        if ( !found )
         {
-            fpos.x += (speed.vx > 0.0f ? DASH: -DASH);
-            fpos.toPixelUnit(position);
+            fpos.x += ( speed.vx > 0.0f ? DASH : -DASH );
+            fpos.toPixelUnit( position );
         }
     }
 }
@@ -282,9 +282,9 @@ void Player::adaptDash()
 
 void Player::move()
 {
-    if(dash)
+    if ( dash )
     {
-        if(speed.vx != 0.0f)
+        if ( speed.vx != 0.0f )
             adaptDash();
 
         dash = false;
@@ -292,34 +292,34 @@ void Player::move()
     else
     {
         fpos += speed;
-        fpos.toPixelUnit(position);
+        fpos.toPixelUnit( position );
     }
 }
 
 
-void Player::handleCollision(int imax, int jmax, const GTile& tile)
+void Player::handleCollision( int imax, int jmax, const GTile& tile )
 {
     bool xmod = false;
     bool left = false;
 
     /// horizontal collision
-    if(speed.vx > 0.0f && tile.rect.x < (position.x + position.w))
+    if ( speed.vx > 0.0f && tile.rect.x < ( position.x + position.w ) )
     {
         speed.vx = 0.0f;
 
-        if(tile.rect.y <= position.y && speed.vy >= 0.0f)
+        if ( tile.rect.y <= position.y && speed.vy >= 0.0f )
         {
             fpos.x = tile.rect.x - position.w;
             position.x = tile.rect.x - position.w;
             xmod = true;
         }
     }
-    else if(speed.vx < 0.0f && tile.rect.x + tile.rect.w > position.x)
+    else if ( speed.vx < 0.0f && tile.rect.x + tile.rect.w > position.x )
     {
         speed.vx = 0.0f;
         left = true;
 
-        if(tile.rect.y <= position.y && speed.vy >= 0.0f)
+        if ( tile.rect.y <= position.y && speed.vy >= 0.0f )
         {
             fpos.x = tile.rect.x + position.w;
             position.x = tile.rect.x + position.w;
@@ -328,18 +328,18 @@ void Player::handleCollision(int imax, int jmax, const GTile& tile)
     }
 
     /// vertical collision
-    if(speed.vy > 0.0f && tile.rect.y < (position.y + position.h))
+    if ( speed.vy > 0.0f && tile.rect.y < ( position.y + position.h ) )
     {
-        if(!xmod)
+        if ( !xmod )
         {
             fpos.y = tile.rect.y - position.h;
             position.y = tile.rect.y - position.h;
             speed.vy = 0.0f;
         }
 
-        if(left)
+        if ( left )
         {
-            if(area.gtiles[imax * Game::GAME_WIDTH + jmax].type == Area::TYPE_SOLID)
+            if ( area.gtiles[imax * Game::GAME_WIDTH + jmax].type == Area::TYPE_SOLID )
             {
                 fpos.y = area.gtiles[imax * Game::GAME_WIDTH + jmax].rect.y - position.h;
                 position.y = area.gtiles[imax * Game::GAME_WIDTH + jmax].rect.y - position.h;
@@ -347,9 +347,9 @@ void Player::handleCollision(int imax, int jmax, const GTile& tile)
             }
         }
     }
-    else if(speed.vy <= 0.0f && tile.rect.y + tile.rect.h > position.y)
+    else if ( speed.vy <= 0.0f && tile.rect.y + tile.rect.h > position.y )
     {
-        if(!xmod)
+        if ( !xmod )
         {
             fpos.y = tile.rect.y + tile.rect.h + 1;
             position.y = tile.rect.y + tile.rect.h + 1;
@@ -365,24 +365,24 @@ bool Player::outOfBound()
                           Game::GAME_HEIGHT - TILE_H
                          };
 
-    return !collisionRect(position, game_bound);
+    return !collisionRect( position, game_bound );
 }
 
 void Player::restart()
 {
     fpos = area.getStart();
     fpos.y += 1.0f;
-    fpos.toPixelUnit(position);
+    fpos.toPixelUnit( position );
     speed *= 0.0f;
     speed.vy = GRAVITY;
 }
 
 
-bool Player::bulletCollision(const std::vector<Bullet*>& bullets)
+bool Player::bulletCollision( const std::vector<Bullet *>& bullets )
 {
-    for(const Bullet* b : bullets)
+    for ( const Bullet * b : bullets )
     {
-        if(collisionRect((*b).position, position))
+        if ( collisionRect( ( *b ).position, position ) )
         {
             restart();
             return true;
@@ -392,25 +392,25 @@ bool Player::bulletCollision(const std::vector<Bullet*>& bullets)
     return false;
 }
 
-bool Player::status(const std::vector<Bullet*>& bullets)
+bool Player::status( const std::vector<Bullet *>& bullets )
 {
-    if(bulletCollision(bullets))
+    if ( bulletCollision( bullets ) )
         return false;
 
     int x = -1, y = -1;
     bool found = false;
     const int jmin = position.x / TILE_W;
     const int imin = position.y / TILE_H;
-    const int jmax = (position.x + position.w - 1) / TILE_W;
-    const int imax = (position.y + position.h - 1) / TILE_H;
+    const int jmax = ( position.x + position.w - 1 ) / TILE_W;
+    const int imax = ( position.y + position.h - 1 ) / TILE_H;
 
-    for(int i = imin; i <= imax; ++i)
+    for ( int i = imin; i <= imax; ++i )
     {
-        for(int j = jmin; j <= jmax; ++j)
+        for ( int j = jmin; j <= jmax; ++j )
         {
             const GTile& tile = area.gtiles[i * Game::GAME_WIDTH + j];
 
-            if(collisionRect(position, tile.rect) && tile.type != Area::TYPE_NONE)
+            if ( collisionRect( position, tile.rect ) && tile.type != Area::TYPE_NONE )
             {
                 x = i;
                 y = j;
@@ -419,18 +419,18 @@ bool Player::status(const std::vector<Bullet*>& bullets)
             }
         }
 
-        if(found)
+        if ( found )
             break;
     }
 
-    if(x == -1 && y == -1)
+    if ( x == -1 && y == -1 )
     {
-        if((area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmin].type == Area::TYPE_NONE
-                && area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmax].type == Area::TYPE_NONE)
-                || (area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmin].type == Area::TYPE_DEATH
-                    && area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmax].type == Area::TYPE_DEATH)
-                || (area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmin].type == Area::TYPE_EXIT
-                    && area.gtiles[(imax + 1) * Game::GAME_WIDTH + jmax].type == Area::TYPE_EXIT))
+        if ( ( area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmin].type == Area::TYPE_NONE
+                && area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmax].type == Area::TYPE_NONE )
+                || ( area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmin].type == Area::TYPE_DEATH
+                     && area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmax].type == Area::TYPE_DEATH )
+                || ( area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmin].type == Area::TYPE_EXIT
+                     && area.gtiles[( imax + 1 ) * Game::GAME_WIDTH + jmax].type == Area::TYPE_EXIT ) )
         {
             speed.vy = GRAVITY;
         }
@@ -438,17 +438,17 @@ bool Player::status(const std::vector<Bullet*>& bullets)
         return false;
     }
 
-    if(area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_DEATH || outOfBound())
+    if ( area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_DEATH || outOfBound() )
     {
         restart();
         return false;
     }
-    else if(area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_EXIT)
+    else if ( area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_EXIT )
         return true;
 
-    else if(area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_SOLID)
+    else if ( area.gtiles[x * Game::GAME_WIDTH + y].type == Area::TYPE_SOLID )
     {
-        handleCollision(imax, jmax, area.gtiles[x * Game::GAME_WIDTH + y]);
+        handleCollision( imax, jmax, area.gtiles[x * Game::GAME_WIDTH + y] );
         return false;
     }
 

@@ -57,16 +57,16 @@ class Game
     unsigned int lvl_count;
     bool exit_status;
     Player * player;
-    Area* area;
-    std::vector<Shooter*> shooters;
-    std::vector<Bullet*> bullets;
+    Area * area;
+    std::vector<Shooter *> shooters;
+    std::vector<Bullet *> bullets;
 
     LX_Win::LX_Window& win;
-    LX_Mixer::LX_Music *music;
+    LX_Mixer::LX_Music * music;
     LX_Event::LX_EventHandler ev;
     unsigned int total_time;
     LX_TrueTypeFont::LX_Font font;
-    LX_Graphics::LX_TextTexture *time_texture;
+    LX_Graphics::LX_TextTexture * time_texture;
     Timer timer;
 
 
@@ -77,7 +77,7 @@ public:
     static const int GAME_WIDTH  = 1280;
     static const int GAME_HEIGHT = 720;
 
-    Game(LX_Win::LX_Window& w);
+    Game( LX_Win::LX_Window& w );
 
     void play();
     void loop();
@@ -88,7 +88,7 @@ public:
     void clean();
     void display();
 
-    void acceptBullet(LX_AABB& bullet_rect);
+    void acceptBullet( LX_AABB& bullet_rect );
 
     ~Game();
 };

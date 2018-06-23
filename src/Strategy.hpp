@@ -35,12 +35,12 @@ class Strategy
 {
 protected:
 
-    Shooter *target;
+    Shooter * target;
     unsigned int reference_time;
 
 public:
 
-    explicit Strategy(Shooter *s);
+    explicit Strategy( Shooter * s );
 
     virtual void proceed() = 0;
     virtual ~Strategy();
@@ -56,9 +56,9 @@ protected:
 
 public:
 
-    explicit ShotStrategy(Shooter *s);
+    explicit ShotStrategy( Shooter * s );
 
-    void setShotDelay(unsigned int delay);
+    void setShotDelay( unsigned int delay );
     void proceed();
 
     ~ShotStrategy() = default;

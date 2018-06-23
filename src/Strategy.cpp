@@ -40,7 +40,7 @@ const unsigned int SHOT_DELAY = 1000;
 
 
 /** Strategy implementation */
-Strategy::Strategy(Shooter *s) : target(s), reference_time(LX_Timer::getTicks())
+Strategy::Strategy( Shooter * s ) : target( s ), reference_time( LX_Timer::getTicks() )
 {
     target = s;
     reference_time = LX_Timer::getTicks();
@@ -54,10 +54,10 @@ Strategy::~Strategy() {}
     Shoot, shoot, shoot!
     That is all!
 */
-ShotStrategy::ShotStrategy(Shooter *s) : Strategy(s), shot_delay(SHOT_DELAY) {}
+ShotStrategy::ShotStrategy( Shooter * s ) : Strategy( s ), shot_delay( SHOT_DELAY ) {}
 
 
-void ShotStrategy::setShotDelay(unsigned int delay)
+void ShotStrategy::setShotDelay( unsigned int delay )
 {
     shot_delay = delay;
 }
@@ -65,7 +65,7 @@ void ShotStrategy::setShotDelay(unsigned int delay)
 
 void ShotStrategy::proceed()
 {
-    if((LX_Timer::getTicks() - reference_time) > shot_delay)
+    if ( ( LX_Timer::getTicks() - reference_time ) > shot_delay )
     {
         target->fire();
         reference_time = LX_Timer::getTicks();

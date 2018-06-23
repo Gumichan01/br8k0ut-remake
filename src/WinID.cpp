@@ -9,7 +9,7 @@ uint32_t wid = 0;
 namespace WinID
 {
 
-void setWinID(uint32_t id)
+void setWinID( uint32_t id )
 {
     wid = id;
 }
